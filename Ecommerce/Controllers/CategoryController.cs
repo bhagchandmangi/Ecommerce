@@ -25,7 +25,17 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public void Post([FromBody] Category category)
         {
-            ListOfcategories.Add(category); 
+            ListOfcategories.Add(category);
+        }
+        [HttpPut("{id}")]
+        public void Put([FromBody] Category category, int id)
+        {
+            ListOfcategories[id] = category;
+        }
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            ListOfcategories.RemoveAt(id);
         }
     }
 }
