@@ -1,7 +1,8 @@
-﻿using Ecommerce.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Ecommerce.Data;
+using Ecommerce.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Ecommerce.Controllers
 {
@@ -9,33 +10,53 @@ namespace Ecommerce.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        public static List<Category> ListOfcategories = new List<Category>
+        private ApplicationDbContext _context;
+
+        public CategoryController(ApplicationDbContext context)
         {
+            _context = context;
+        }
 
-        new Category{Id = 1, Name = "Samsung", DisplayOrder = 1 },
-        new Category{Id = 2, Name = "Apple", DisplayOrder= 2 },
-        new Category{Id = 3, Name = "Oppo", DisplayOrder = 3 },
-        };
-
+        // GET: api/<CategoryController>
         [HttpGet]
         public IEnumerable<Category> Get()
         {
-            return ListOfcategories;
+            return _context.Categories;
         }
+
+        // GET api/<CategoryController>/5
+        [HttpGet("{id}")]
+        public Category Get(int id)
+        {
+            return _context.Categories.FirstOrDefault(x=>x.Id==id);
+        }
+
+        // POST api/<CategoryController>
         [HttpPost]
         public void Post([FromBody] Category category)
         {
-            ListOfcategories.Add(category);
+            _context.Categories.Add(category);
+            _context.SaveChanges();
         }
+
+        // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
-        public void Put([FromBody] Category category, int id)
+        public void Put(int id, [FromBody] Category category)
         {
-            ListOfcategories[id] = category;
+            var categoryFromDb = _context.Categories.FirstOrDefault(x=>x.Id==id);
+            categoryFromDb.Name = category.Name;
+            categoryFromDb.DisplayOrder = category.DisplayOrder;
+            _context.Categories.Update(categoryFromDb);
+            _context.SaveChanges();
         }
+
+        // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            ListOfcategories.RemoveAt(id);
+            var categoryFromDb = _context.Categories.Find(id);
+            _context.Categories.Remove(categoryFromDb);
+            _context.SaveChanges();
         }
     }
 }
