@@ -26,37 +26,40 @@ namespace Ecommerce.Controllers
 
         // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public Category Get(int id)
+        public IActionResult Get(int id)
         {
-            return _context.Categories.FirstOrDefault(x=>x.Id==id);
+            return Ok(_context.Categories.FirstOrDefault(x=>x.Id==id));
         }
 
         // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody] Category category)
+        public IActionResult Post([FromBody] Category category)
         {
             _context.Categories.Add(category);
             _context.SaveChanges();
+            return Ok("Category Created");
         }
 
         // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Category category)
+        public IActionResult Put(int id, [FromBody] Category category)
         {
             var categoryFromDb = _context.Categories.FirstOrDefault(x=>x.Id==id);
             categoryFromDb.Name = category.Name;
             categoryFromDb.DisplayOrder = category.DisplayOrder;
             _context.Categories.Update(categoryFromDb);
             _context.SaveChanges();
+            return Ok("Category Updated");
         }
 
         // DELETE api/<CategoryController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             var categoryFromDb = _context.Categories.Find(id);
             _context.Categories.Remove(categoryFromDb);
             _context.SaveChanges();
+            return Ok("Category Deleted");
         }
     }
 }
