@@ -35,21 +35,38 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Category category)
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
-            return Ok("Category Created");
+            if (category == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return Ok("Category Created");
+            }
+            
         }
 
         // PUT api/<CategoryController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Category category)
         {
+
             var categoryFromDb = _context.Categories.FirstOrDefault(x=>x.Id==id);
-            categoryFromDb.Name = category.Name;
-            categoryFromDb.DisplayOrder = category.DisplayOrder;
-            _context.Categories.Update(categoryFromDb);
-            _context.SaveChanges();
-            return Ok("Category Updated");
+           if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+           else
+            {
+                categoryFromDb.Name = category.Name;
+                categoryFromDb.DisplayOrder = category.DisplayOrder;
+                _context.Categories.Update(categoryFromDb);
+                _context.SaveChanges();
+                return Ok("Category Updated");
+            }
+            
         }
 
         // DELETE api/<CategoryController>/5
@@ -57,9 +74,17 @@ namespace Ecommerce.Controllers
         public IActionResult Delete(int id)
         {
             var categoryFromDb = _context.Categories.Find(id);
-            _context.Categories.Remove(categoryFromDb);
-            _context.SaveChanges();
-            return Ok("Category Deleted");
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _context.Categories.Remove(categoryFromDb);
+                _context.SaveChanges();
+                return Ok("Category Deleted");
+            }
+           
         }
     }
 }
