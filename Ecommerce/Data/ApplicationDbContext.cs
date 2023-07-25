@@ -11,7 +11,10 @@ namespace Ecommerce.Data
         {
             
         }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookCover> BookCovers { get; set; }
+        public DbSet<BookWriter> Writers { get; set; }  
+
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    modelBuilder.Entity<Category>().HasData(

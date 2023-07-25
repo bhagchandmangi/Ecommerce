@@ -19,73 +19,73 @@ namespace Ecommerce.Controllers
         }
 
         // GET: api/<CategoryController>
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            return Ok(await _context.Categories.ToListAsync());
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    return Ok(await _context.Categories.ToListAsync());
+        //}
 
-        // GET api/<CategoryController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            return Ok(await _context.Categories.FirstOrDefaultAsync(x=>x.Id==id));
-        }
+        //// GET api/<CategoryController>/5
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Get(int id)
+        //{
+        //    return Ok(await _context.Categories.FirstOrDefaultAsync(x=>x.Id==id));
+        //}
 
-        // POST api/<CategoryController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Category category)
-        {
-            if (category == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                await _context.Categories.AddAsync(category);
-                await _context.SaveChangesAsync();
-                return Ok("Category Created");
-            }
+        //// POST api/<CategoryController>
+        //[HttpPost]
+        //public async Task<IActionResult> Post([FromBody] Category category)
+        //{
+        //    if (category == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    else
+        //    {
+        //        await _context.Categories.AddAsync(category);
+        //        await _context.SaveChangesAsync();
+        //        return Ok("Category Created");
+        //    }
             
-        }
+        //}
 
-        // PUT api/<CategoryController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Category category)
-        {
+        //// PUT api/<CategoryController>/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Put(int id, [FromBody] Category category)
+        //{
 
-             var categoryFromDb = await _context.Categories.FirstOrDefaultAsync(x=>x.Id==id);
-           if (categoryFromDb == null)
-            {
-                return NotFound();
-            }
-           else
-            {
-                categoryFromDb.Name = category.Name;
-                categoryFromDb.DisplayOrder = category.DisplayOrder;
-                _context.Categories.Update(categoryFromDb);
-                await _context.SaveChangesAsync();
-                return Ok("Category Updated");
-            }
+        //     var categoryFromDb = await _context.Categories.FirstOrDefaultAsync(x=>x.Id==id);
+        //   if (categoryFromDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //   else
+        //    {
+        //        categoryFromDb.Name = category.Name;
+        //        categoryFromDb.DisplayOrder = category.DisplayOrder;
+        //        _context.Categories.Update(categoryFromDb);
+        //        await _context.SaveChangesAsync();
+        //        return Ok("Category Updated");
+        //    }
             
-        }
+        //}
 
-        // DELETE api/<CategoryController>/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var categoryFromDb = await _context.Categories.FindAsync(id);
-            if (categoryFromDb == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                _context.Categories.Remove(categoryFromDb);
-                await _context.SaveChangesAsync();
-                return Ok("Category Deleted");
-            }
+        //// DELETE api/<CategoryController>/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var categoryFromDb = await _context.Categories.FindAsync(id);
+        //    if (categoryFromDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        _context.Categories.Remove(categoryFromDb);
+        //        await _context.SaveChangesAsync();
+        //        return Ok("Category Deleted");
+        //    }
            
-        }
+        //}
     }
 }
