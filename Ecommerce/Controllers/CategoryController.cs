@@ -18,6 +18,7 @@ namespace Ecommerce.Controllers
             _context = context;
         }
 
+
         // GET: api/<CategoryController>
         //[HttpGet]
         //public async Task<IActionResult> Get()
