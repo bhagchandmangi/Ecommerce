@@ -1,11 +1,14 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Web.Http.ModelBinding;
-
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 namespace Ecommerce.Helper
 {
-    public class FileHelper
+    public class FileHelper : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
@@ -15,35 +18,36 @@ namespace Ecommerce.Helper
             _context = context;
             _hostEnvironment = hostEnvironment;
         }
+        //[HttpPost]
+        ////public static async Task<string> UploadImage(IFormFile file)
+        //{
+        //    if (file == null || file.Length == 0)
+        //        return BadRequest("File is not selected or the file is empty.");
 
-        public async Task<string> UploadImage(IFormFile file)
-        {
-            if (ModelState.IsValid)
-            {
-                string fileName = string.Empty;
-                if (file != null)
-                {
-                    string uploadDir = Path.Combine(_hostEnvironment.WebRootPath, "ProductImage");
-                    fileName = Guid.NewGuid().ToString() + "-" + file.FileName;
-                    string filePath = Path.Combine(uploadDir, fileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                            }
-                    //   vm.Product.ImageUrl = filePath;
-                    book.BookCover.ImageUrl = @"\ProductImage\" + fileName;
-                }
-                if (book.Product.Id == 0)
-                {
-                    _unitOfWork.Product.Add(book.Product);
-                    TempData["success"] = "Product Added Successfully";
-                }
+        //    try
+        //    {
+        //        string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "Images");
+        //        if (!Directory.Exists(uploadsFolder))
+        //            Directory.CreateDirectory(uploadsFolder);
 
-                _unitOfWork.Save();
-                TempData["success"] = "Category Updated Done";
-                return RedirectToAction("Index");
-            }
-            return RedirectToAction("Index");
-        }
+        //        string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        //        using (var stream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            await file.CopyToAsync(stream);
+        //        }
+
+        //        // Optionally, you can save the image URL in the database or return it in the response.
+        //        // For simplicity, we'll just return the file name.
+        //        return Ok(uniqueFileName);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Error uploading image: " + ex.Message);
+        //    }
+
+        //}
+
     }
 }

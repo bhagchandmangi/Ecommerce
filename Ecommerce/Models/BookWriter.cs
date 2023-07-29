@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace Ecommerce.Models
 {
@@ -13,7 +14,7 @@ namespace Ecommerce.Models
         public string Gender { get; set; }
         public string ImageUrl { get; set; }
         [NotMapped]
-        public string ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; }
         public ICollection<Book> Books { get; set;}
         public ICollection<BookWriter> Writers { get; set;}
     }
