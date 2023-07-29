@@ -12,26 +12,6 @@ namespace Ecommerce.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BookCovers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BookCoverId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookCovers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BookCovers_BookCovers_BookCoverId",
-                        column: x => x.BookCoverId,
-                        principalTable: "BookCovers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Writers",
                 columns: table => new
                 {
@@ -39,14 +19,28 @@ namespace Ecommerce.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Writers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookCovers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BookWriterId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Writers", x => x.Id);
+                    table.PrimaryKey("PK_BookCovers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Writers_Writers_BookWriterId",
+                        name: "FK_BookCovers_Writers_BookWriterId",
                         column: x => x.BookWriterId,
                         principalTable: "Writers",
                         principalColumn: "Id");
@@ -60,10 +54,9 @@ namespace Ecommerce.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BookUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ISBNNUMBER = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BookCoverId = table.Column<int>(type: "int", nullable: false),
                     BookWriterId = table.Column<int>(type: "int", nullable: false)
@@ -86,9 +79,9 @@ namespace Ecommerce.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookCovers_BookCoverId",
+                name: "IX_BookCovers_BookWriterId",
                 table: "BookCovers",
-                column: "BookCoverId");
+                column: "BookWriterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_BookCoverId",
@@ -98,11 +91,6 @@ namespace Ecommerce.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Books_BookWriterId",
                 table: "Books",
-                column: "BookWriterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Writers_BookWriterId",
-                table: "Writers",
                 column: "BookWriterId");
         }
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230725102147_init")]
+    [Migration("20230729153208_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -32,10 +32,6 @@ namespace Ecommerce.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("BookCoverId")
                         .HasColumnType("int");
@@ -83,7 +79,7 @@ namespace Ecommerce.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BookCoverId")
+                    b.Property<int?>("BookWriterId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
@@ -96,7 +92,7 @@ namespace Ecommerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookCoverId");
+                    b.HasIndex("BookWriterId");
 
                     b.ToTable("BookCovers");
                 });
@@ -108,9 +104,6 @@ namespace Ecommerce.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BookWriterId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -126,15 +119,13 @@ namespace Ecommerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookWriterId");
-
                     b.ToTable("Writers");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Book", b =>
                 {
                     b.HasOne("Ecommerce.Models.BookCover", "BookCover")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("BookCoverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -152,15 +143,8 @@ namespace Ecommerce.Migrations
 
             modelBuilder.Entity("Ecommerce.Models.BookCover", b =>
                 {
-                    b.HasOne("Ecommerce.Models.BookCover", null)
-                        .WithMany("Books")
-                        .HasForeignKey("BookCoverId");
-                });
-
-            modelBuilder.Entity("Ecommerce.Models.BookWriter", b =>
-                {
                     b.HasOne("Ecommerce.Models.BookWriter", null)
-                        .WithMany("Writers")
+                        .WithMany("BookCovers")
                         .HasForeignKey("BookWriterId");
                 });
 
@@ -171,9 +155,9 @@ namespace Ecommerce.Migrations
 
             modelBuilder.Entity("Ecommerce.Models.BookWriter", b =>
                 {
-                    b.Navigation("Books");
+                    b.Navigation("BookCovers");
 
-                    b.Navigation("Writers");
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

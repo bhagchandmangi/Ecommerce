@@ -9,8 +9,10 @@ namespace Ecommerce.Models
         
         public string Title { get; set; }
         public string ImageUrl { get; set; }
+        //public int BookWritterId { get; set; }
+      //  public BookWriter BookWriter { get; set; } 
         [NotMapped]
         public IFormFile ImageFile { get; set; }
-        public ICollection<BookCover> Books { get; set; }
+        public ICollection<Book> Books { get; set; }
     }
 }
