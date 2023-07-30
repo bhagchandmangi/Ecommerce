@@ -20,7 +20,7 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUpdate(BookCover bookCover, IFormFile? file)
+        public async Task<IActionResult> CreateUpdate([FromForm]BookCover bookCover, IFormFile? file)
         {
             if (ModelState.IsValid)
             {

@@ -21,7 +21,7 @@ namespace Ecommerce.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateUpdate(Book book, IFormFile? file)
+        public async Task<IActionResult> CreateUpdate([FromForm]Book book, IFormFile? file)
         {
             if (ModelState.IsValid)
             {

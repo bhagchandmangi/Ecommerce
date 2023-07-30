@@ -8,7 +8,9 @@ namespace Ecommerce.Models
     public class BookWriter
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Gender { get; set; }
         public string ImageUrl { get; set; }
         [NotMapped]
